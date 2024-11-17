@@ -11,7 +11,7 @@ export default function Banner() {
       
 
         <div class="relative mx-auto max-w-screen-xl px-4 py-28 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8 justify-end">
-          <div class="max-w-xl text-left ltr:sm:text-left rtl:sm:text-right">
+          <div class="w-full max-w-2xl text-left ltr:sm:text-left rtl:sm:text-right bg-slate-100 p-2 px-6 rounded-lg">
           <ScoreCard />
             {/* <h1 class="text-3xl font-extrabold text-white sm:text-5xl">
               Let us find your
