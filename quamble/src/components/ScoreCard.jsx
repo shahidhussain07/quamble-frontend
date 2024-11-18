@@ -1,41 +1,67 @@
-import React from "react";
+import React from 'react';
+import '../styles/ScoreCard.css'; // Make sure to create this CSS file with the styles below
 
-export default function ScoreCard() {
-  return (
-    <div className="max-w-7xl mx-auto px-4">
-      <h1 className="text-3xl font-light text-gray-700 text-center my-8">
-        Parallax Flipping Cards
-      </h1>
-      <div className="flex flex-wrap justify-center gap-4">
-        {["Diligord", "Strizzes", "Clossyo"].map((title, index) => (
-          <div
-            key={index}
-            className="group w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.33%-1rem)] lg:w-[calc(25%-1rem)] cursor-pointer relative"
-          >
-            <div className="relative w-full h-[280px] rounded-lg shadow-lg transform-style-3d transition-transform duration-700">
-              {/* Front */}
-              <div
-                className="absolute inset-0 bg-cover bg-center rounded-lg flex items-center justify-center text-white text-xl font-semibold transform group-hover:rotate-y-180 backface-hidden transition-transform duration-700"
-                style={{
-                  backgroundImage: `url(https://unsplash.it/500/${500 + index})`,
-                }}
-              >
-                <div className="text-center">
-                  <p>{title}</p>
-                  <span className="text-sm text-gray-300">Lorem ipsum</span>
+const ScoreCard = () => {
+    const cardData = [
+        {
+            title: 'Weekly Top 5',
+            details: [
+                { name: 'Alice', score: 1200 },
+                { name: 'Bob', score: 1150 },
+                { name: 'Charlie', score: 1100 },
+                { name: 'David', score: 1050 },
+                { name: 'Eve', score: 1000 }
+            ]
+        },
+        {
+            title: 'Monthly Top 5',
+            details: [
+                { name: 'Frank', score: 4500 },
+                { name: 'Grace', score: 4400 },
+                { name: 'Hank', score: 4300 },
+                { name: 'Ivy', score: 4200 },
+                { name: 'Jack', score: 4100 }
+            ]
+        },
+        {
+            title: 'All Time Top 5',
+            details: [
+                { name: 'Kim', score: 10000 },
+                { name: 'Liam', score: 9800 },
+                { name: 'Mia', score: 9700 },
+                { name: 'Noah', score: 9600 },
+                { name: 'Olivia', score: 9500 }
+            ]
+        }
+    ];
+
+    return (
+        <div className="card-wrapper flex-col pt-5">
+          <h1 className='bg-gradient-to-b from-[#ecc4e9] to-[#ecc4e9] text-[#9902c7] text-4xl font-normal text-center p-2 pb-3 rounded-xl bg-slate-300' >Leader Board</h1>
+          <div className='flex gap-5'>
+            {cardData.map((card, index) => (
+                <div 
+                    key={index} 
+                    className="card-container"
+                >
+                    <div className="card">
+                        <div className="card-face card-front font-medium bg-[url('/assets/LBCardBG.jpg')] bg-cover bg-center">
+                            {card.title}
+                        </div>
+                        <div className="card-face card-back bg-gradient-to-b from-[#00c6fb] to-[#005bea]">
+                          <h1 className='text-2xl'> {card.title} </h1>
+                            <ul className='w-full h-full flex flex-col justify-center gap-2 px-6'>
+                                {card.details.map((player, i) => (
+                                    <li key={i}>{player.name}: {player.score}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              {/* Back */}
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-600 text-white rounded-lg p-6 flex items-center justify-center transform rotate-y-180 backface-hidden transition-transform duration-700">
-                <p className="text-center text-gray-800">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Alias cum repellat velit quae suscipit c.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+        </div>
+    );
+};
+
+export default ScoreCard;
