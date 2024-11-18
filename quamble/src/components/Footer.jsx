@@ -1,3 +1,6 @@
+import React from "react";
+import Contact from './Contact'
+
 export const Footer = () => {
      return (
        <div className="relative mt-16 bg-[#661fff]">
@@ -12,7 +15,7 @@ export const Footer = () => {
            />
          </svg>
          <div className="px-4 pt-12 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 text-white">
-           <div className="grid gap-16 row-gap-10 mb-8 lg:grid-cols-6">
+           <div className="flex gap-16 row-gap-10 mb-8 lg:grid-cols-6">
              <div className="md:max-w-md lg:col-span-2">
                <a
                  href="/"
@@ -20,223 +23,27 @@ export const Footer = () => {
                  title="Company"
                  className="inline-flex items-center"
                >
-                 <svg
-                   className="w-8 text-teal-accent-400"
-                   viewBox="0 0 24 24"
-                   strokeLinejoin="round"
-                   strokeWidth="2"
-                   strokeLinecap="round"
-                   strokeMiterlimit="10"
-                   stroke="currentColor"
-                   fill="none"
-                 >
-                   <rect x="3" y="1" width="7" height="12" />
-                   <rect x="3" y="17" width="7" height="6" />
-                   <rect x="14" y="1" width="7" height="6" />
-                   <rect x="14" y="11" width="7" height="12" />
-                 </svg>
-                 <span className="ml-2 text-xl font-bold tracking-wide text-black-100 uppercase">
-                   Company
-                 </span>
+                 <img src="/assets/logoD.png" alt="" className="h-20 w-auto" />
                </a>
                <div className="mt-4 lg:max-w-sm">
                  <p className="text-sm text-deep-purple-50">
-                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                   accusantium doloremque laudantium, totam rem aperiam.
-                 </p>
-                 <p className="mt-4 text-sm text-deep-purple-50">
-                   Eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                   beatae vitae dicta sunt explicabo.
+                 Explore your favorite quiz themes and challenge your knowledge on our interactive platform. Bridging the gap between quiz enthusiasts and quiz masters, one question at a time!
                  </p>
                </div>
              </div>
-             <div className="grid grid-cols-2 gap-5 row-gap-8 lg:col-span-4 md:grid-cols-4">
-               <div>
-                 <p className="font-semibold tracking-wide text-teal-accent-400">
-                   Category
-                 </p>
-                 <ul className="mt-2 space-y-2">
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       News
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       World
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Games
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       References
-                     </a>
-                   </li>
-                 </ul>
-               </div>
-               <div>
-                 <p className="font-semibold tracking-wide text-teal-accent-400">
-                   Cherry
-                 </p>
-                 <ul className="mt-2 space-y-2">
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Web
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       eCommerce
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Business
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Entertainment
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Portfolio
-                     </a>
-                   </li>
-                 </ul>
-               </div>
-               <div>
-                 <p className="font-semibold tracking-wide text-teal-accent-400">
-                   Apples
-                 </p>
-                 <ul className="mt-2 space-y-2">
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Media
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Brochure
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Nonprofit
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Educational
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Projects
-                     </a>
-                   </li>
-                 </ul>
-               </div>
-               <div>
-                 <p className="font-semibold tracking-wide text-teal-accent-400">
-                   Business
-                 </p>
-                 <ul className="mt-2 space-y-2">
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Infopreneur
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Personal
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Wiki
-                     </a>
-                   </li>
-                   <li>
-                     <a
-                       href="/"
-                       className="transition-colors duration-300 text-deep-purple-50 hover:text-teal-accent-400"
-                     >
-                       Forum
-                     </a>
-                   </li>
-                 </ul>
-               </div>
-             </div>
+             <Contact />
            </div>
            <div className="flex flex-col justify-between pt-5 pb-10 border-t border-deep-purple-accent-200 sm:flex-row">
              <p className="text-sm text-gray-100">
-               © Copyright 2020 Lorem Inc. All rights reserved.
+               © Copyright 2024 Quamble All rights reserved.
              </p>
              <div className="flex items-center mt-4 space-x-4 sm:mt-0">
                <a
-                 href="/"
+                 href="https://www.linkedin.com/company/104816648/admin/page-posts/published/"
                  className="transition-colors duration-300 text-deep-purple-100 hover:text-teal-accent-400"
+                 target="_blank"
                >
-                 <svg viewBox="0 0 24 24" fill="currentColor" className="h-5">
-                   <path d="M24,4.6c-0.9,0.4-1.8,0.7-2.8,0.8c1-0.6,1.8-1.6,2.2-2.7c-1,0.6-2,1-3.1,1.2c-0.9-1-2.2-1.6-3.6-1.6 c-2.7,0-4.9,2.2-4.9,4.9c0,0.4,0,0.8,0.1,1.1C7.7,8.1,4.1,6.1,1.7,3.1C1.2,3.9,1,4.7,1,5.6c0,1.7,0.9,3.2,2.2,4.1 C2.4,9.7,1.6,9.5,1,9.1c0,0,0,0,0,0.1c0,2.4,1.7,4.4,3.9,4.8c-0.4,0.1-0.8,0.2-1.3,0.2c-0.3,0-0.6,0-0.9-0.1c0.6,2,2.4,3.4,4.6,3.4 c-1.7,1.3-3.8,2.1-6.1,2.1c-0.4,0-0.8,0-1.2-0.1c2.2,1.4,4.8,2.2,7.5,2.2c9.1,0,14-7.5,14-14c0-0.2,0-0.4,0-0.6 C22.5,6.4,23.3,5.5,24,4.6z" />
-                 </svg>
+                 <img src="/assets/socialPlatform/linkedin.png" alt="" className="w-6 h-auto"  />
                </a>
                <a
                  href="/"
