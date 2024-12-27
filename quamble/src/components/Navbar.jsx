@@ -5,7 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 import { useState } from 'react';
 
 const navigation = [
-  { name: 'Dashboard', href: '/', current: true },
+  { name: 'Dashboard', href: '/dashboard', current: true },
   { name: 'Home', href: '/', current: false },
   { name: 'Quizzes', href: '/quiz', current: false },
   { name: 'About Us', href: '/aboutus', current: false },
@@ -35,7 +35,7 @@ export default function Example() {
             <div className="flex shrink-0 items-center">
               <img
                 alt="Your Company"
-                src="../public/assets/logo.png"
+                src="/assets/logo.png"
                 className="h-10 w-auto"
               />
             </div>

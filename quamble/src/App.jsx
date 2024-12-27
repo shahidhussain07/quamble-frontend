@@ -8,6 +8,7 @@ import { Footer } from "./components/Footer";
 import QuizCard from "./components/QuizCard";
 import AboutUs from "./components/AboutUs";
 import QuizCardsSection from "./components/QuizCardsSection";
+import Dasboard from "./components/Dasboard";
 // import './App.css'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/quiz" element={<QuizCardsSection />} />
         <Route path="/aboutus" element={<AboutUs />} /> 
         <Route path="/quiz/ai-quiz" element={<QuizCard />} />
+        <Route path="/dasboard" element={< Dasboard />} />
       </Routes>
       <Footer />
     </Router>
