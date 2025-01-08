@@ -3,13 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Home from "./components/Home";
 import { Footer } from "./components/Footer";
 import QuizCard from "./components/QuizCard";
 import AboutUs from "./components/AboutUs";
 import QuizCardsSection from "./components/QuizCardsSection";
-import Dasboard from "./components/Dasboard";
-// import './App.css'
+import Dashboard from "./components/Dashboard";
+import HeroSection from "./components/HeroSection";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -18,13 +17,14 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} /> 
-        <Route path="/login" element={<Login />} /> {/* Login Page */}
-        <Route path="/signup" element={<SignUp />} /> {/* Signup Page */}
+        <Route path="/" element={<HeroSection />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/quiz" element={<QuizCardsSection />} />
-        <Route path="/aboutus" element={<AboutUs />} /> 
+        <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/quiz/ai-quiz" element={<QuizCard />} />
-        <Route path="/dasboard" element={< Dasboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/profile" element={<Dashboard />} />
       </Routes>
       <Footer />
     </Router>

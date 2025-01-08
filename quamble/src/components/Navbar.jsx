@@ -1,25 +1,26 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom'; // Import useLocation
 import { FaSearch } from 'react-icons/fa';
 import { useState } from 'react';
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', current: true },
-  { name: 'Home', href: '/', current: false },
-  { name: 'Quizzes', href: '/quiz', current: false },
-  { name: 'About Us', href: '/aboutus', current: false },
+  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Home', href: '/' },
+  { name: 'Quizzes', href: '/quiz' },
+  { name: 'About Us', href: '/aboutus' },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Example() {
+export default function Navbar() {
+  const { pathname } = useLocation(); // Get current route
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-10">
+    <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-20">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -43,16 +44,17 @@ export default function Example() {
               <div className="flex space-x-4">
                 {navigation.map((item) => (
                   <Link
-                  key={item.name}
-                  to={item.href}
-                  aria-current={item.current ? 'page' : undefined}
-                  className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'rounded-md px-3 py-2 text-sm font-medium',
-                  )}
-                >
-                  {item.name}
-                </Link>
+                    key={item.name}
+                    to={item.href}
+                    className={classNames(
+                      pathname === item.href
+                        ? 'bg-gray-900 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      'rounded-md px-3 py-2 text-sm font-medium'
+                    )}
+                  >
+                    {item.name}
+                  </Link>
                 ))}
               </div>
             </div>
@@ -142,10 +144,12 @@ export default function Example() {
               key={item.name}
               as="a"
               href={item.href}
-              aria-current={item.current ? 'page' : undefined}
+              aria-current={pathname === item.href ? 'page' : undefined}
               className={classNames(
-                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                'block rounded-md px-3 py-2 text-base font-medium',
+                pathname === item.href
+                  ? 'bg-gray-900 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                'block rounded-md px-3 py-2 text-base font-medium'
               )}
             >
               {item.name}

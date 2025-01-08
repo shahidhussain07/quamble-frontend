@@ -45,6 +45,7 @@ const QuestionCard = ({ question, options, currentQuestion, totalQuestions, onAn
   };
 
   return (
+    <div className='py-20'>
     <div className="max-w-xl mx-auto bg-white shadow-md rounded-lg p-5 m-7 border border-gray-300">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
@@ -119,6 +120,7 @@ const QuestionCard = ({ question, options, currentQuestion, totalQuestions, onAn
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };
