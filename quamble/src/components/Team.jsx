@@ -13,7 +13,7 @@ function Team() {
           </h1>
         </div>
       </div>
-      <div className="w-full bg-gray-100 px-10 pt-10">
+      <div className="w-full bg-gradient-to-b from-gray-200 to-white px-10 pt-10">
         <div className="container mx-auto">
           <div className="lg:flex md:flex sm:flex items-center xl:justify-around flex-wrap md:justify-around sm:justify-around lg:justify-around">
             <div className="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">

@@ -25,9 +25,9 @@ export const Footer = () => {
               title="Company"
               className="inline-flex items-center"
             >
-              <img src="/assets/logoD.png" alt="" className="h-20 w-auto" />
+              <img src="/assets/logoD.png" alt="" className="h-32 w-auto" />
             </a>
-            <div className="mt-4 lg:max-w-sm">
+            <div className="mt-0 lg:max-w-sm">
               <p className="text-sm text-deep-purple-50">
                 Explore your favorite quiz themes and challenge your knowledge on our interactive platform. Bridging the gap between quiz enthusiasts and quiz masters, one question at a time!
               </p>

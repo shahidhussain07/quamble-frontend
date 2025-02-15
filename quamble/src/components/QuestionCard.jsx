@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Link} from "react-router-dom";
 import { runConfettiEffect } from '../script/confettiEffect';
 
 const QuestionCard = ({ question, options, currentQuestion, totalQuestions, onAnswerChange, onNext, onSubmit }) => {
@@ -89,12 +90,14 @@ const QuestionCard = ({ question, options, currentQuestion, totalQuestions, onAn
             Next
           </button>
         ) : (
-          <button
-            onClick={handleSubmit}
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-          >
-            Submit
-          </button>
+          <Link to="/aichallenge/result">
+            <button
+              onClick={handleSubmit}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Submit
+            </button>
+          </Link>
         )}
       </div>
 
