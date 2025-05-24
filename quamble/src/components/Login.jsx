@@ -1,12 +1,17 @@
 import axios from "axios"
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export default function Login() {
+	const navigate = useNavigate()
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 	})
+	const [error, setError] = useState("")
+	const [loading, setLoading] = useState(false)
 
 	const handleChange = e => {
 		setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -14,26 +19,56 @@ export default function Login() {
 
 	const handleSubmit = async e => {
 		e.preventDefault()
+		setError("")
+		setLoading(true)
 
 		const data = new FormData()
 		data.append("email", formData.email)
 		data.append("password", formData.password)
 
-		console.log(data)
-
 		try {
-			const response = await axios.post(
-				"http://3.109.121.195:5000/login",
-				data,
-				{
-					headers: {
-						"Content-Type": "multipart/form-data",
-					},
+			const response = await axios.post(`${API_BASE_URL}/login`, data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			})
+
+			if (response.data && response.data.token) {
+				// Store the token in localStorage
+				localStorage.setItem("authToken", response.data.token)
+
+				// Optional: Store user info if needed (be careful with sensitive data)
+				if (response.data.message) {
+					const username = response.data.message
+						.replace("Welcome, ", "")
+						.replace("!", "")
+					localStorage.setItem("username", username)
 				}
-			)
-			console.log("Login success:", response.data)
+
+				console.log("Login success:", response.data.message)
+
+				// Redirect to home page or dashboard
+				navigate("/")
+			} else {
+				setError("Invalid response from server")
+			}
 		} catch (err) {
 			console.error("Login error:", err)
+
+			// Handle specific error messages
+			if (err.response) {
+				if (err.response.status === 401) {
+					setError("Invalid email or password")
+				} else if (err.response.data && err.response.data.message) {
+					setError(err.response.data.message)
+				} else {
+					setError("Login failed. Please try again.")
+				}
+			} else {
+				setError("Network error. Please check your connection.")
+			}
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -56,6 +91,11 @@ export default function Login() {
 
 				<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
 					<div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+						{error && (
+							<div class="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded">
+								{error}
+							</div>
+						)}
 						<form
 							class="space-y-6"
 							action="#"
@@ -130,8 +170,9 @@ export default function Login() {
 							<div>
 								<button
 									type="submit"
+									disabled={loading}
 									class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#661fff] hover:bg-[#7738ff] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-									Login
+									{loading ? "Logging in..." : "Login"}
 								</button>
 							</div>
 						</form>

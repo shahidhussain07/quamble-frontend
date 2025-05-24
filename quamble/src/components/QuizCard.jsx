@@ -1,81 +1,178 @@
-import React, { useState } from 'react';
-import QuestionCard from './QuestionCard';
-
-const quizQuestions = [
-  {
-    question: 'What is the capital of France?',
-    options: ['Paris', 'Berlin', 'Madrid', 'Rome'],
-  },
-  {
-    question: 'Which planet is known as the Red Planet?',
-    options: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
-  },
-  {
-    question: 'Who wrote the play "Romeo and Juliet"?',
-    options: ['William Shakespeare', 'Charles Dickens', 'Jane Austen', 'Leo Tolstoy'],
-  },
-  {
-    question: 'What is the largest mammal in the world?',
-    options: ['Blue Whale', 'Elephant', 'Giraffe', 'Hippopotamus'],
-  },
-  {
-    question: 'How many continents are there on Earth?',
-    options: ['Seven', 'Six', 'Five', 'Eight'],
-  },
-  {
-    question: 'What is the chemical symbol for water?',
-    options: ['H2O', 'CO2', 'NaCl', 'O2'],
-  },
-  {
-    question: 'Which year did the Titanic sink?',
-    options: ['1912', '1905', '1921', '1899'],
-  },
-  {
-    question: 'What is the hardest natural substance on Earth?',
-    options: ['Diamond', 'Gold', 'Iron', 'Granite'],
-  },
-  {
-    question: 'Who is known as the father of modern physics?',
-    options: ['Albert Einstein', 'Isaac Newton', 'Galileo Galilei', 'Niels Bohr'],
-  },
-  {
-    question: 'What is the smallest country in the world by area?',
-    options: ['Vatican City', 'Monaco', 'San Marino', 'Liechtenstein'],
-  },
-];
-
+import React, { useState, useEffect } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import QuestionCard from "./QuestionCard"
+import { useAuth } from "../context/AuthContext"
+import axios from "axios"
 
 const QuizCard = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(1);
+	const [quizQuestions, setQuizQuestions] = useState([])
+	const [correctAnswers, setCorrectAnswers] = useState([])
+	const [userAnswers, setUserAnswers] = useState([])
+	const [currentQuestion, setCurrentQuestion] = useState(1)
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState(null)
+	const [quizId, setQuizId] = useState(null)
+	const [startTime, setStartTime] = useState(null)
 
-  const handleAnswerChange = (answer) => {
-    console.log(`Selected answer: ${answer}`);
-  };
+	const location = useLocation()
+	const navigate = useNavigate()
+	const { getAuthToken, isAuthenticated } = useAuth()
 
-  const handlePrevious = () => {
-    setCurrentQuestion((prev) => Math.max(prev - 1, 1));
-  };
+	const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
-  const handleNext = () => {
-    setCurrentQuestion((prev) => Math.min(prev + 1, quizQuestions.length));
-  };
+	// Extract query parameters
+	const queryParams = new URLSearchParams(location.search)
+	const theme = queryParams.get("theme") || "general"
+	const mode = queryParams.get("mode") || "theme-challenge"
+	const numQuestions = queryParams.get("numQuestions") || 5
 
-  const handleSubmit = () => {
-    console.log('Quiz submitted');
-  };
+	useEffect(() => {
+		if (!isAuthenticated()) {
+			navigate("/login")
+			return
+		}
 
-  return (
-    <QuestionCard
-      question={quizQuestions[currentQuestion - 1].question}
-      options={quizQuestions[currentQuestion - 1].options}
-      currentQuestion={currentQuestion}
-      totalQuestions={quizQuestions.length}
-      onAnswerChange={handleAnswerChange}
-      onPrevious={handlePrevious}
-      onNext={handleNext}
-      onSubmit={handleSubmit}
-    />
-  );
-};
+		// Record the start time when the component mounts
+		setStartTime(new Date().toISOString())
 
-export default QuizCard;
+		// Initialize user answers array based on the number of questions
+		setUserAnswers(Array(parseInt(numQuestions)).fill(""))
+
+		// Fetch quiz based on the mode
+		fetchQuiz()
+	}, [isAuthenticated, theme, mode, numQuestions, navigate])
+
+	const fetchQuiz = async () => {
+		setLoading(true)
+		try {
+			const token = getAuthToken()
+			let response
+
+			// Choose the appropriate API endpoint based on the mode
+			if (mode === "theme-challenge") {
+				// Use create_quiz_from_bank API for theme challenges
+				response = await axios.post(
+					`${API_BASE_URL}/create_quiz_from_bank`,
+					{
+						theme,
+						num_questions: numQuestions,
+					},
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				)
+			} else if (mode === "head-to-head") {
+				// Use beat_the_ai API for head-to-head mode
+				response = await axios.post(
+					`${API_BASE_URL}/beat_the_ai`,
+					{},
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				)
+			} else {
+				// Default to create_quiz_from_bank
+				response = await axios.post(
+					`${API_BASE_URL}/create_quiz_from_bank`,
+					{
+						theme,
+						num_questions: numQuestions,
+					},
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				)
+			}
+
+			// Process the response
+			if (response.data) {
+				setQuizId(response.data.quiz_id)
+
+				// Process questions
+				const questions = response.data.questions.map(q => {
+					// Handle both string and object formats
+					if (typeof q === "string") {
+						try {
+							return JSON.parse(q)
+						} catch {
+							return { question: q, options: [] }
+						}
+					}
+					return q
+				})
+
+				setQuizQuestions(questions)
+				setCorrectAnswers(response.data.correct_options || [])
+			}
+		} catch (err) {
+			console.error("Error fetching quiz:", err)
+			setError("Failed to load quiz. Please try again.")
+		} finally {
+			setLoading(false)
+		}
+	}
+
+	const handleAnswerChange = answer => {
+		// Update the user's answer for the current question
+		const updatedAnswers = [...userAnswers]
+		updatedAnswers[currentQuestion - 1] = answer
+		setUserAnswers(updatedAnswers)
+	}
+
+	const handleNext = () => {
+		// Move to the next question
+		if (currentQuestion < quizQuestions.length) {
+			setCurrentQuestion(currentQuestion + 1)
+		}
+	}
+
+	if (loading) {
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#661fff]"></div>
+			</div>
+		)
+	}
+
+	if (error) {
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-red-500 text-xl">{error}</div>
+			</div>
+		)
+	}
+
+	if (!quizQuestions.length) {
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-gray-500 text-xl">
+					No questions available
+				</div>
+			</div>
+		)
+	}
+
+	const currentQuestionData = quizQuestions[currentQuestion - 1]
+
+	return (
+		<QuestionCard
+			question={currentQuestionData.question}
+			options={currentQuestionData.options || []}
+			currentQuestion={currentQuestion}
+			totalQuestions={quizQuestions.length}
+			onAnswerChange={handleAnswerChange}
+			onNext={handleNext}
+			quizId={quizId}
+			theme={theme}
+			startTime={startTime}
+			allUserResponses={userAnswers}
+		/>
+	)
+}
+export default QuizCard

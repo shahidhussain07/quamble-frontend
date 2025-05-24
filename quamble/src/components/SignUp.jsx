@@ -1,8 +1,11 @@
 import axios from "axios"
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+
+const API_BASE_URL = import.meta.env.API_BASE_URL
 
 export default function SignUp() {
+	const navigate = useNavigate()
 	const [formData, setFormData] = useState({
 		username: "",
 		email: "",
@@ -27,16 +30,13 @@ export default function SignUp() {
 		console.log(data)
 
 		try {
-			const response = await axios.post(
-				"http://3.109.121.195:5000/signup",
-				data,
-				{
-					headers: {
-						"Content-Type": "multipart/form-data",
-					},
-				}
-			)
+			const response = await axios.post(`${API_BASE_URL}/signup`, data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			})
 			console.log("Signup success:", response.data)
+			navigate("/")
 		} catch (err) {
 			console.error("Signup error:", err)
 		}
