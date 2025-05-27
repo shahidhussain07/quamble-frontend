@@ -12,6 +12,7 @@ import LLMchallenge from "./components/LLMchallenge"
 import Challengemodel from "./components/Challengemodel"
 import Resultpage from "./components/Reasultpage"
 import { AuthProvider } from "./context/AuthContext"
+import BeatTheAI from "./components/BeatTheAI"
 
 function App() {
 	return (
@@ -28,6 +29,10 @@ function App() {
 					<Route path="/dashboard" element={<Dashboard />} />
 					<Route path="/dashboard/profile" element={<Dashboard />} />
 					<Route path="/aichallenge" element={<LLMchallenge />} />
+					<Route
+						path="/aichallenge/beat-the-ai"
+						element={<BeatTheAI />}
+					/>
 					<Route
 						path="/aichallenge/challengemodel"
 						element={<Challengemodel />}
